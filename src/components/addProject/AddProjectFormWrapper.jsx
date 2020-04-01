@@ -7,6 +7,7 @@ import ProjectItem from '../Project list/ProjectItem.jsx'
 import Button from '@material-ui/core/Button';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import sendToFireStore from '../../functions/sendToFireStore.js';
+import { useToasts } from 'react-toast-notifications'
 
 const useStyles = makeStyles((theme) => ({
 	form: {
@@ -25,6 +26,7 @@ const AddProjectFormWrapper = ({ userDatas, onLoaded }) => {
 	const classes = useStyles();
 	const [value, setValue] = React.useState('');
 	const [selectedData, setSelectedData] = React.useState(null)
+	const { addToast } = useToasts()
 	
 
 	const handleChange = (event) => {
@@ -69,7 +71,7 @@ const AddProjectFormWrapper = ({ userDatas, onLoaded }) => {
 					<Button
 						variant="contained"
 						color="default"
-						onClick={() => { sendToFireStore('projects', selectedData).then(res => console.log(res)).catch(err => console.log(err)) }}
+						onClick={() => { sendToFireStore('projects', selectedData).then(res => addToast('Your project has been succefully added', { appearance: 'success' })).catch(err => addToast("Your project is already in our database...", { appearance: 'error' })) }}
 						className={classes.submitProjectButton}
 						startIcon={<CloudUploadIcon />}
 					>
