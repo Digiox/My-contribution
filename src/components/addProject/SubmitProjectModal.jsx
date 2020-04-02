@@ -18,11 +18,12 @@ const useStyles = makeStyles((theme) => ({
 
 
 const SubmitProjectModal = (props) => {
-    const { addToast } = useToasts()
+
     const classes = useStyles();
     const [userDatas, setDatas] = useState({})
     const [loaded, setLoaded] = useState(false)
     const [submitError, setSubmitError] = useState(false)
+    console.log(loaded)
 
     const retrieveUserDatas = () => {
         const token = store.getState().userToken
@@ -57,7 +58,7 @@ const SubmitProjectModal = (props) => {
             <AddProjectFormWrapper onLoaded={() => {
                 if (!loaded) {
                     console.log("test")
-                    addToast('Saved Successfully', { appearance: 'success' })
+                    addToast('Your datas are successfully loaded', { appearance: 'success' })
                     setLoaded(true)
                 }
 
@@ -74,13 +75,25 @@ const SubmitProjectModal = (props) => {
             </div>)
     }
 
+    const LoadingDataFail = () => {
+        const { addToast } = useToasts()
+        console.log(props)
+
+        return (
+            <ErrorLoadingData onLoaded={() => {
+                if (!loaded) {
+                    console.log("test")
+                    addToast('Error loading your datas', { appearance: 'error' })
+                    setLoaded(true)
+                }
+
+            }} userDatas={userDatas} />
+        )
+    }
+
     return (
         <ToastProvider>
-            {submitError ? <ErrorLoadingData onLoaded={() => {
-                if (!loaded) {
-                    addToast('Error loading your datas', { appearance: 'error' })
-                }
-            }} /> :
+            {submitError ? <LoadingDataFail /> :
                 <div>
                     {!userDatas.repos ? loadingComponent(classes) : <LoadedComponent />}
                 </div>}
