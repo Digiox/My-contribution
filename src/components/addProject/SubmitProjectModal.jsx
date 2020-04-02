@@ -18,6 +18,7 @@ const useStyles = makeStyles((theme) => ({
 
 
 const SubmitProjectModal = (props) => {
+    const { addToast } = useToasts()
     const classes = useStyles();
     const [userDatas, setDatas] = useState({})
     const [loaded, setLoaded] = useState(false)
@@ -75,7 +76,11 @@ const SubmitProjectModal = (props) => {
 
     return (
         <ToastProvider>
-            {submitError ? <ErrorLoadingData /> :
+            {submitError ? <ErrorLoadingData onLoaded={() => {
+                if (!loaded) {
+                    addToast('Error loading your datas', { appearance: 'error' })
+                }
+            }} /> :
                 <div>
                     {!userDatas.repos ? loadingComponent(classes) : <LoadedComponent />}
                 </div>}
