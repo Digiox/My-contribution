@@ -7,6 +7,7 @@ import { LinearProgress } from '@material-ui/core';
 import makeObjectData from '../../functions/makeReposObjectData'
 import AddProjectFormWrapper from './AddProjectFormWrapper';
 import { ToastProvider, useToasts } from 'react-toast-notifications'
+import ErrorLoadingData from "../Errors/ErrorLoadingDatas.jsx"
 
 const useStyles = makeStyles((theme) => ({
     loadingWrapper: {
@@ -20,6 +21,7 @@ const SubmitProjectModal = (props) => {
     const classes = useStyles();
     const [userDatas, setDatas] = useState({})
     const [loaded, setLoaded] = useState(false)
+    const [submitError, setSubmitError] = useState(false)
 
     const retrieveUserDatas = () => {
         const token = store.getState().userToken
@@ -32,8 +34,8 @@ const SubmitProjectModal = (props) => {
         }).then(res => {
             makeObjectData(name, res.data).then(data => {
                 setDatas(data)
-            }).catch(err => console.log(err))
-        }).catch(err => console.error('ERROR', err))
+            }).catch(err => setSubmitError(true))
+        }).catch(err => setSubmitError(true))
     }
 
 
@@ -52,12 +54,12 @@ const SubmitProjectModal = (props) => {
 
         return (
             <AddProjectFormWrapper onLoaded={() => {
-               if (!loaded) {
-                console.log("test")
-                addToast('Saved Successfully', { appearance: 'success' })
-                setLoaded(true)
-               }
-       
+                if (!loaded) {
+                    console.log("test")
+                    addToast('Saved Successfully', { appearance: 'success' })
+                    setLoaded(true)
+                }
+
             }} userDatas={userDatas} />
         )
     }
@@ -73,9 +75,10 @@ const SubmitProjectModal = (props) => {
 
     return (
         <ToastProvider>
-            <div>
-                {!userDatas.repos ? loadingComponent(classes) : <LoadedComponent />}
-            </div>
+            {submitError ? <ErrorLoadingData /> :
+                <div>
+                    {!userDatas.repos ? loadingComponent(classes) : <LoadedComponent />}
+                </div>}
         </ToastProvider>
 
     );
