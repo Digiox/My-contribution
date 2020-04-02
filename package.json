@@ -19,6 +19,7 @@
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.4.0",
     "react-test-render": "^1.1.2",
+    "react-toast-notifications": "^2.4.0",
     "redux": "^4.0.5"
   },
   "scripts": {
@@ -45,7 +46,7 @@
     ]
   },
   "devDependencies": {
-    "@babel/preset-env": "^7.8.6",
+    "@babel/preset-env": "^7.9.0",
     "@babel/preset-react": "^7.8.3",
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.2",

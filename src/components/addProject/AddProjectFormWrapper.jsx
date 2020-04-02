@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
 import TextField from '@material-ui/core/TextField';
@@ -7,6 +7,7 @@ import ProjectItem from '../Project list/ProjectItem.jsx'
 import Button from '@material-ui/core/Button';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import sendToFireStore from '../../functions/sendToFireStore.js';
+import { useToasts } from 'react-toast-notifications'
 
 const useStyles = makeStyles((theme) => ({
 	form: {
@@ -21,14 +22,16 @@ const useStyles = makeStyles((theme) => ({
 	}
 }));
 
-const AddProjectFormWrapper = (props) => {
+const AddProjectFormWrapper = ({ userDatas, onLoaded }) => {
 	const classes = useStyles();
 	const [value, setValue] = React.useState('');
 	const [selectedData, setSelectedData] = React.useState(null)
+	const { addToast } = useToasts()
+	
 
 	const handleChange = (event) => {
 		setValue(event.target.value)
-		props.userDatas.repos.forEach(element => {
+		userDatas.repos.forEach(element => {
 			if (element.name === event.target.value) {
 				setSelectedData({
 					repoName: element.name,
@@ -40,14 +43,19 @@ const AddProjectFormWrapper = (props) => {
 			}
 		});
 	};
+
+	useEffect(() => {
+			onLoaded(true)
+	})
+
 	return (
 		<form className={classes.form}>
-			<TextField defaultValue={props.userDatas.userName} variant="outlined" />
+			<TextField defaultValue={userDatas.userName} variant="outlined" />
 			<Select onChange={handleChange} value={value} displayEmpty >
 				<MenuItem value="" disabled>
 					<p className={classes.selectPlaceholder}>Sélectionner un repo</p>
 				</MenuItem>
-				{props.userDatas.repos.map(el => <MenuItem key={el.id} value={el.name}>{el.name}</MenuItem>)}
+				{userDatas.repos.map(el => <MenuItem key={el.id} value={el.name}>{el.name}</MenuItem>)}
 			</Select>
 			{
 				selectedData !== null &&
@@ -63,7 +71,7 @@ const AddProjectFormWrapper = (props) => {
 					<Button
 						variant="contained"
 						color="default"
-						onClick={() => {sendToFireStore('projects', selectedData).then(res => console.log(res)).catch(err => console.log(err))}}
+						onClick={() => { sendToFireStore('projects', selectedData).then(res => addToast('Your project has been succefully added', { appearance: 'success' })).catch(err => addToast("Your project is already in our database...", { appearance: 'error' })) }}
 						className={classes.submitProjectButton}
 						startIcon={<CloudUploadIcon />}
 					>
