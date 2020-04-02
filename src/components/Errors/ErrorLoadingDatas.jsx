@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 
 const ErrorLoadingDatas = ({ onLoaded }) => {
     useEffect(() => {
-        onloaded()
+        onLoaded()
     })
     return (
         <div>
