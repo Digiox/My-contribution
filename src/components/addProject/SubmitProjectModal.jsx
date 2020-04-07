@@ -58,7 +58,7 @@ const SubmitProjectModal = (props) => {
             <AddProjectFormWrapper onLoaded={() => {
                 if (!loaded) {
                     console.log("test")
-                    addToast('Your datas are successfully loaded', { appearance: 'success' })
+                    addToast('Vos données ont été chargées avec succès', { appearance: 'success' })
                     setLoaded(true)
                 }
 
@@ -83,7 +83,7 @@ const SubmitProjectModal = (props) => {
             <ErrorLoadingData onLoaded={() => {
                 if (!loaded) {
                     console.log("test")
-                    addToast('Error loading your datas', { appearance: 'error' })
+                    addToast('Une erreur est survenue lors du chargement de vos données', { appearance: 'error' })
                     setLoaded(true)
                 }
 
