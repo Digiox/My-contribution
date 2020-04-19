@@ -15,7 +15,7 @@ import OSPList from '../Project list/OSPList';
 import firebase from "../../firebase-config/firebaseConfig"
 import AddProject from '../addProject/AddProject';
 import store from '../../redux/store'
-
+import PopupModal from '../../molecules/PopupModal'
 
 
 
@@ -100,6 +100,7 @@ export default function Main() {
 
     return (
         <div className={classes.root}>
+            <PopupModal />
             <AddProject callBack={(openState) => setShowAddProject(openState)} show={showAddProject} />
             <AppBar position="static">
                 <Toolbar>
