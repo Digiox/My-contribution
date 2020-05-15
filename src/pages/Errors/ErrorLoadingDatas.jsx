@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Title } from "../atoms/index"
+import { Title } from "../../atoms/index"
 
 const ErrorLoadingDatas = ({ onLoaded }) => {
     useEffect(() => {

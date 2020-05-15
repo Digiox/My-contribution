@@ -5,7 +5,7 @@ import {
   Switch,
   Route,
 } from "react-router-dom";
-import UnknownPath from './components/Errors/UnknownPath';
+import { UnknownPath } from './pages/index';
 import Main from './components/Main/Main';
 
 
@@ -18,13 +18,13 @@ function App() {
     <Router>
       <Switch>
         <Route exact path={"/"}>
-        <Main />
+          <Main />
         </Route>
-        <Route  path={"/*"}>
-        <UnknownPath />
+        <Route path={"/*"}>
+          <UnknownPath />
         </Route>
       </Switch>
-  </Router>
+    </Router>
   );
 }
 
