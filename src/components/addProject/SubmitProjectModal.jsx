@@ -7,7 +7,7 @@ import { LinearProgress } from '@material-ui/core';
 import makeObjectData from '../../functions/makeReposObjectData'
 import AddProjectFormWrapper from './AddProjectFormWrapper';
 import { ToastProvider, useToasts } from 'react-toast-notifications'
-import ErrorLoadingData from "../Errors/ErrorLoadingDatas.jsx"
+import { ErrorLoadingData } from "../../pages/index"
 
 const useStyles = makeStyles((theme) => ({
     loadingWrapper: {
